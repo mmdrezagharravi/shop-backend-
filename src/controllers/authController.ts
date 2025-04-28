@@ -11,6 +11,23 @@ export const signup = async (req: Request, res: Response) => {
     const user = new User({ username, email, password: hashed });
     await user.save();
     res.status(201).json({ message: "User created", user });
+
+    //creat token
+    const token = jwt.sign(
+      { userId: user._id, role: user.role },
+      process.env.JWT_SECRET as string
+      // { expiresIn: "1h" } // بعد یک ساعت توکن میسوزه
+    );
+    res.status(201).json({
+      message: "user created successfully",
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+      },
+    });
+    res.json({ token });
   } catch (err) {
     console.log(err);
     res.status(500).json({ error: "Signup failed" });
@@ -19,7 +36,7 @@ export const signup = async (req: Request, res: Response) => {
 
 export const login = async (req: Request, res: Response) => {
   try {
-    const { username, password, emali } = req.body;
+    const { username, password, email } = req.body;
     const user = await User.findOne({ username });
     if (!user || !(await bcrypt.compare(password, user.password))) {
       res.status(401).json({ error: "Invalid credentials" });

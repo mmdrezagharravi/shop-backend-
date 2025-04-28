@@ -10,7 +10,6 @@ import { getAllProducts } from "../controllers/productController";
 
 const router = express.Router();
 
-
 // sigin up
 router.post("/signup", signup);
 
