@@ -23,10 +23,10 @@ export const signup = async (req: Request, res: Response) => {
       user: {
         id: user._id,
         username: user.username,
+        // role: user.role,
         email: user.email,
       },
     });
-    res.json({ token });
   } catch (err: any) {
     console.log(err.message);
     res.status(500).json({ error: "Signup failed" });
@@ -51,10 +51,10 @@ export const login = async (req: Request, res: Response) => {
       user: {
         id: user._id,
         username: user.username,
+        // role: user.role,
         email: user.email,
       },
     });
-    res.json({ token });
   } catch {
     console.log(error);
     res.status(500).json({ error: "Login failed" });
