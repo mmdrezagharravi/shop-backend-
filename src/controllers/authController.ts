@@ -23,7 +23,7 @@ export const signup = async (req: Request, res: Response) => {
       user: {
         id: user._id,
         username: user.username,
-        // role: user.role,
+        role: user.role,
         email: user.email,
       },
     });
@@ -51,7 +51,7 @@ export const login = async (req: Request, res: Response) => {
       user: {
         id: user._id,
         username: user.username,
-        // role: user.role,
+        role: user.role,
         email: user.email,
       },
     });
