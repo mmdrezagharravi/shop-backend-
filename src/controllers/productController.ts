@@ -15,16 +15,14 @@ export const createProduct = async (req: Request, res: Response) => {
 // Read all
 export const getAllProducts = async (req: Request, res: Response) => {
   try {
-    const list = [];
-    if (req.body.category) {
-      const products = await Product.find({ category: req.body.category });
-      list.push(products);
-    } else {
-      const products = await Product.find();
-      list.push(products);
-    }
-    res.json(list);
-  } catch {
+    const { category } = req.query;
+
+    const products = category
+      ? await Product.find({ category })
+      : await Product.find();
+
+    res.json(products);
+  } catch (error) {
     res.status(500).json({ error: "Failed to fetch products" });
   }
 };

@@ -20,7 +20,7 @@ const cartSchema = new Schema<ICart>(
       },
     ],
   },
-  { timestamps: true } // اضافه کردن createdAt و updatedAt به صورت خودکار
+  { timestamps: true }
 );
 
 export const Cart = model<ICart>("Cart", cartSchema);
