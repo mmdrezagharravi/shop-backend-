@@ -29,7 +29,7 @@ const orderSchema = new Schema<IOrder>(
       default: "pending",
     },
   },
-  { timestamps: true } // اضافه کردن createdAt و updatedAt به صورت خودکار
+  { timestamps: true }
 );
 
 export const Order = model<IOrder>("Order", orderSchema);

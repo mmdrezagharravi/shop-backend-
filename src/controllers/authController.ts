@@ -10,13 +10,12 @@ export const signup = async (req: Request, res: Response) => {
     const hashed = await bcrypt.hash(password, 10);
     const user = new User({ username, email, password: hashed });
     await user.save();
-    res.status(201).json({ message: "User created", user });
+    // res.status(201).json({ message: "User created", user });
 
     //creat token
     const token = jwt.sign(
       { userId: user._id, role: user.role },
       process.env.JWT_SECRET as string
-      // { expiresIn: "1h" } // بعد یک ساعت توکن میسوزه
     );
     res.status(201).json({
       message: "user created successfully",
@@ -28,8 +27,8 @@ export const signup = async (req: Request, res: Response) => {
       },
     });
     res.json({ token });
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    console.log(err.message);
     res.status(500).json({ error: "Signup failed" });
   }
 };
@@ -46,6 +45,15 @@ export const login = async (req: Request, res: Response) => {
       { userId: user._id, role: user.role },
       process.env.JWT_SECRET as string
     );
+    res.status(201).json({
+      message: "login successfuly :)",
+      token,
+      user: {
+        id: user._id,
+        username: user.username,
+        email: user.email,
+      },
+    });
     res.json({ token });
   } catch {
     console.log(error);

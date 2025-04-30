@@ -13,10 +13,17 @@ export const createProduct = async (req: Request, res: Response) => {
 };
 
 // Read all
-export const getAllProducts = async (_req: Request, res: Response) => {
+export const getAllProducts = async (req: Request, res: Response) => {
   try {
-    const products = await Product.find();
-    res.json(products);
+    const list = [];
+    if (req.body.category) {
+      const products = await Product.find({ category: req.body.category });
+      list.push(products);
+    } else {
+      const products = await Product.find();
+      list.push(products);
+    }
+    res.json(list);
   } catch {
     res.status(500).json({ error: "Failed to fetch products" });
   }
